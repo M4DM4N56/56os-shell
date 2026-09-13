@@ -1,2 +1,7 @@
-Panel Panel.qml
 ColoredIcon ColoredIcon.qml
+
+ShellSurface ShellSurface.qml
+BarContent BarContent.qml
+PanelReveal PanelReveal.qml
+PanelBackground PanelBackground.qml
+PanelHost PanelHost.qml

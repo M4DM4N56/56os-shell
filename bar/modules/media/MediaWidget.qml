@@ -11,15 +11,19 @@ Item {
 
     required property var screen
 
-    implicitWidth: mediaPanel.isOpen
+    readonly property bool panelOpen: PanelLogic.owner === root
+
+    Component { id: mediaContent; MediaPanel {} }
+
+    implicitWidth: panelOpen
         ? Theme.mediaPanelWidth // panel is open: change widget width to panel width
-        : MediaService.hasMedia 
-            ? row.implicitWidth + (Theme.modulePadding * 2) // panel isnt open: give the widget its proper width 
+        : MediaService.hasMedia
+            ? row.implicitWidth + (Theme.modulePadding * 2) // panel isnt open: give the widget its proper width
             : 0
 
     implicitHeight: Theme.barHeight
 
-    opacity: (mediaPanel.isOpen || !MediaService.hasMedia) ? 0.0 : 1.0
+    opacity: (panelOpen || !MediaService.hasMedia) ? 0.0 : 1.0
 
     Behavior on implicitWidth { NumberAnimation { duration: 200; easing.type: Easing.OutCubic } }
     Behavior on opacity { NumberAnimation { duration: 100 } }
@@ -75,27 +79,22 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         onClicked: (mouse) => {
             if (mouse.button === Qt.RightButton) {
-                if (mediaPanel.isOpen) mediaPanel.closePanel()
+                if (root.panelOpen) PanelLogic.close()
                 else if (MediaService.hasMedia) {
-                    mediaPanel.anchorX     = root.mapToGlobal(0, 0).x
-                    mediaPanel.anchorWidth = root.width
-                    mediaPanel.openPanel()
+                    PanelLogic.open("media", {
+                        owner:       root,
+                        content:     mediaContent,
+                        width:       Theme.mediaPanelWidth,
+                        anchorX:     root.mapToGlobal(0, 0).x,
+                        anchorWidth: root.width,
+                        screen:      root.screen
+                    })
                 }
             } else {
-                if (!mediaPanel.isOpen && MediaService.hasMedia)
+                if (!root.panelOpen && MediaService.hasMedia)
                     MediaService.togglePlay()
             }
         }
-    }
-
-
-    // media panel call
-    Panel {
-        id:         mediaPanel
-        screen:     root.screen
-        panelWidth: Theme.mediaPanelWidth
-
-        MediaPanel {}
     }
 
 } // item

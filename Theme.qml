@@ -24,7 +24,7 @@ Singleton {
 // geometry ---
     // bar
     readonly property int barHeight:        36      // the height of the bar
-    readonly property int barRadius:        8       // the roundness of the bar's corners
+    readonly property int barRadius:        10       // the roundness of the bar's corners
     readonly property int moduleSpacing:    16      // gap between modules
     readonly property int modulePadding:    8       // a module's horizontal padding
     readonly property int barMarginSide:    6       // margin between monitor edge and bar sides
@@ -46,7 +46,7 @@ Singleton {
     readonly property int volumePanelWidth: 240     // the entire width of the volume widget
     readonly property int panelPadding:     20      // padding on all sides of pop up panels
     readonly property int panelTopPadding:  8
-    readonly property int panelJoinRadius:  8       // curvature from bar to panel sides
+    readonly property int panelJoinRadius:  10       // curvature from bar to panel sides
 
     // icons
     readonly property int iconSize:        16
@@ -59,9 +59,9 @@ Singleton {
 // --- geometry
 
 // animation ---
-readonly property int animFast:         100
-readonly property int animMedium:       100
-readonly property int animSlow:         100
+    readonly property int animFast:         150
+    readonly property int animMedium:       600
+    readonly property int animSlow:         400
 // --- animation
 
 // colors ---

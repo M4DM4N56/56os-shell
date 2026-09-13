@@ -12,6 +12,7 @@ Item {
     property int    size: Theme.iconSize
     width:  size
     height: size
+    
     Image {
         id: mask
         anchors.fill: parent
@@ -19,6 +20,7 @@ Item {
         sourceSize: Qt.size(parent.size, parent.size)
         visible: false
     }
+
     Rectangle {
         anchors.fill: parent
         color: parent.color

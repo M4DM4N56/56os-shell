@@ -52,7 +52,7 @@ Scope {
                 visible: (Osd.showing || dismissing) && barHiddenHere
                 WlrLayershell.layer:         WlrLayer.Overlay
                 WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-                WlrLayershell.exclusiveZone: 0
+                exclusionMode: ExclusionMode.Ignore
 
                 Rectangle {
                     id:                       osdRect

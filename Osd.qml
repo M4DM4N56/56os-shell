@@ -10,7 +10,6 @@ Singleton {
     property bool   showing:        false
     property string osdType:        ""
 
-
     property string simpleIcon:     ""
     property string simpleValue:    ""
 
@@ -22,7 +21,7 @@ Singleton {
 
 
     function triggerSimple(icon, value) {
-        if (PanelLogic.activePanel !== null) return // dont show when bar is active
+        if (PanelLogic.isOpen) return // dont show when bar is active
         simpleIcon  = icon
         simpleValue = value
         osdType     = "simple"
@@ -31,7 +30,7 @@ Singleton {
     }
 
     function triggerMedia(artist, track, trackNum, art) {
-        if (PanelLogic.activePanel !== null) return
+        if (PanelLogic.isOpen) return
         mediaArtist     = artist
         mediaTrack      = track
         mediaTracknum   = trackNum
@@ -54,8 +53,8 @@ Singleton {
 
     Connections {
         target: PanelLogic
-        function onActivePanelChanged() {
-            if (PanelLogic.activePanel !== null) root.dismiss()
+        function onOpenIdChanged() {
+            if (PanelLogic.isOpen) root.dismiss()
         }
     }
 

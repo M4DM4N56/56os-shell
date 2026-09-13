@@ -11,12 +11,16 @@ Item {
     
     required property var screen
 
+    Component { id: volumeContent; VolumePanel {} }
 
-    implicitWidth: volumePanel.isOpen
-                ? Theme.volumePanelWidth
-                : Theme.iconSize + (Theme.modulePadding * 2) + 16
+    // this specific instance owns the open panel
+    readonly property bool panelOpen: PanelLogic.owner === root
 
-    opacity: volumePanel.isOpen ? 0.0 : 1.0
+    implicitWidth: panelOpen
+        ? Theme.volumePanelWidth
+        : Theme.iconSize + (Theme.modulePadding * 2) + 16
+
+    opacity: panelOpen ? 0.0 : 1.0
 
     Behavior on implicitWidth {
         NumberAnimation { duration: 200; easing.type: Easing.OutCubic }
@@ -53,22 +57,15 @@ Item {
         anchors.fill: parent
         cursorShape:  Qt.PointingHandCursor
         onClicked: {
-            if (volumePanel.isOpen) { volumePanel.closePanel() } 
-            else { 
-                volumePanel.anchorX     = root.mapToGlobal(0, 0).x
-                volumePanel.anchorWidth = root.width
-                volumePanel.openPanel() 
-            }
+            PanelLogic.toggle("volume", {
+                owner:       root,
+                content:     volumeContent,
+                width:       Theme.volumePanelWidth,
+                anchorX:     root.mapToGlobal(0, 0).x,
+                anchorWidth: root.width,
+                screen:      root.screen
+            })
         }
-    }
-
-    
-    Panel {
-        id:         volumePanel
-        screen:     root.screen
-        panelWidth: 250
-
-        VolumePanel {}
     }
 
 } // item
