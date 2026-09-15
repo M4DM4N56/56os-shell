@@ -66,4 +66,4 @@ Singleton {
     }
 
 
-}
+} // singleton

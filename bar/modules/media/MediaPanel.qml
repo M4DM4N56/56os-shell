@@ -7,15 +7,15 @@ import "../../../ui/"
 import "../../../utils/"
 
 
-
 Column {
+    
     width:      parent?.width ?? 0
 
     RowLayout {
         width:   parent?.width ?? 0
         spacing: 10
 
-    // album art ---
+    // album art
         Item {
             Layout.preferredWidth:  Theme.albumArtSize
             Layout.preferredHeight: Theme.albumArtSize
@@ -26,7 +26,7 @@ Column {
                 id:            roundMask
                 anchors.fill:  parent
                 radius:        Theme.albumArtRadius
-                color:         "white"
+                color:         Theme.colorSecondary
                 layer.enabled: true
             }
 
@@ -44,8 +44,7 @@ Column {
                     maskSpreadAtMin:  1.0
                 }
             }
-        }
-    // --- album art
+        } // item
 
 
     // metadata
@@ -68,7 +67,7 @@ Column {
             Text {
                 width:          parent.width
                 text:           MediaService.trackAlbum
-                color:          Qt.alpha(Theme.colorPrimary, 0.6)
+                color:          Qt.alpha(Theme.colorPrimary, 0.7)
                 font.family:    Theme.fontFamily
                 font.pixelSize: Theme.fontSmall
                 elide:          Text.ElideRight
@@ -78,205 +77,111 @@ Column {
             Text {
                 width:          parent.width
                 text:           MediaService.trackArtist || "Unknown Artist"
-                color:          Qt.alpha(Theme.colorPrimary, 0.5)
+                color:          Qt.alpha(Theme.colorPrimary, 0.4)
                 font.family:    Theme.fontFamily
                 font.pixelSize: Theme.fontSmall
                 elide:          Text.ElideRight
             }
 
+            MediaSeekBar {}
+
+
         } // column
-    // metadata
 
     } // row layout
 
-    Item { width: 1; height: Theme.panelTopPadding} // vertical padding
 
+    //Item { width: 1; height: 10} // vertical padding
 
-    Item {
-        id:      seekRow
-        width:   parent.width
-        height:  20
-        visible: MediaService.lengthSupported && MediaService.positionSupported
+    
+} // column
 
-        property bool dragging:     false
-        property real dragPosition: 0
+    // Item {
+    //     width:  parent.width
+    //     height: Theme.iconSize
 
-        readonly property real displayPosition: dragging
-            ? dragPosition
-            : (MediaService.activePlayer?.position ?? 0)
+    // // media controls
+    //     Row {
+    //         anchors.centerIn: parent
+    //         spacing:          32
 
-        readonly property real progress: MediaService.length > 0
-            ? Math.max(0, Math.min(1, displayPosition / MediaService.length))
-            : 0
+    //         Item { // rewind button
+    //             width: Theme.iconSize
+    //             height: Theme.iconSize
+    //             visible: MediaService.canPrevious
+    //             anchors.verticalCenter: parent.verticalCenter
 
-        // current position
-        Text {
-            id:                     posLabel
-            anchors.left:           parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            text:                   Utils.formatTime(seekRow.displayPosition)
-            color:                  Qt.alpha(Theme.colorPrimary, 0.5)
-            font.family:            Theme.fontFamily
-            font.pixelSize:         Theme.fontSmall
-        }
-
-        // duration
-        Text {
-            id:                     durLabel
-            anchors.right:          parent.right
-            anchors.verticalCenter: parent.verticalCenter
-            text:                   Utils.formatTime(MediaService.length)
-            color:                  Qt.alpha(Theme.colorPrimary, 0.5)
-            font.family:            Theme.fontFamily
-            font.pixelSize:         Theme.fontSmall
-        }
-
-        // track between labels
-        Item {
-            id:                     track
-            anchors.left:           posLabel.right
-            anchors.right:          durLabel.left
-            anchors.leftMargin:     6
-            anchors.rightMargin:    6
-            anchors.verticalCenter: parent.verticalCenter
-            height:                 parent.height
-
-            Rectangle {
-                anchors.verticalCenter: parent.verticalCenter
-                width:                  parent.width
-                height:                 2
-                radius:                 1.5
-                color:                  Qt.alpha(Theme.colorSecondary, 1)
-
-                Rectangle {
-                    width:  parent.width * seekRow.progress
-                    height: parent.height
-                    radius: parent.radius
-                    color:  Qt.alpha(Theme.colorPrimary, 0.5)
-                }
-            }
-
-            Rectangle {
-                anchors.verticalCenter: parent.verticalCenter
-                x:      (parent.width - width) * seekRow.progress
-                width:  8
-                height: 8
-                radius: 4
-                color:  Theme.colorPrimary
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                cursorShape:  Qt.PointingHandCursor
-
-                function seek(mouseX) {
-                    let ratio = Math.max(0, Math.min(1, mouseX / width))
-                    seekRow.dragPosition = ratio * MediaService.length
-                }
-
-                onPressed:         (mouse) => { seekRow.dragging = true; seek(mouse.x) }
-                onPositionChanged: (mouse) => { if (pressed) seek(mouse.x) }
-                onReleased: {
-                    MediaService.setPosition(seekRow.dragPosition)
-                    seekRow.dragging = false
-                }
-            }
-
-        } // item
-    } // item
-
-    Item { width: 1; height: Theme.panelTopPadding}
-
-
-    Item {
-    width:  parent.width
-    height: Theme.iconSize
-
-    // media controls
-        Row {
-            anchors.centerIn: parent
-            spacing:          32
-
-            Item { // rewind button
-                width: Theme.iconSize
-                height: Theme.iconSize
-                visible: MediaService.canPrevious
-                anchors.verticalCenter: parent.verticalCenter
-
-                ColoredIcon {
-                    source: Qt.resolvedUrl("../../../assets/icons/media/rewind.svg")
-                    color: Theme.colorPrimary
-                }
+    //             ColoredIcon {
+    //                 source: Qt.resolvedUrl("../../../assets/icons/media/rewind.svg")
+    //                 color: Theme.colorPrimary
+    //             }
                 
-                MouseArea { 
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: MediaService.previous() 
-                }
+    //             MouseArea { 
+    //                 anchors.fill: parent
+    //                 cursorShape: Qt.PointingHandCursor
+    //                 onClicked: MediaService.previous() 
+    //             }
 
-            } // item
+    //         } // item
 
-            Item {
-                width: 
-                Theme.iconSize
-                height: Theme.iconSize
-                visible: MediaService.canToggle
-                anchors.verticalCenter: parent.verticalCenter
+    //         Item {
+    //             width: 
+    //             Theme.iconSize
+    //             height: Theme.iconSize
+    //             visible: MediaService.canToggle
+    //             anchors.verticalCenter: parent.verticalCenter
                 
-                ColoredIcon {
-                    source: Qt.resolvedUrl("../../../assets/icons/media/"
-                        + (MediaService.isPlaying ? "pause.svg" : "play.svg"))
-                    color: Theme.colorPrimary
-                }
+    //             ColoredIcon {
+    //                 source: Qt.resolvedUrl("../../../assets/icons/media/"
+    //                     + (MediaService.isPlaying ? "pause.svg" : "play.svg"))
+    //                 color: Theme.colorPrimary
+    //             }
                 
-                MouseArea { 
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: MediaService.togglePlay() 
-                }
-            } // item
+    //             MouseArea { 
+    //                 anchors.fill: parent
+    //                 cursorShape: Qt.PointingHandCursor
+    //                 onClicked: MediaService.togglePlay() 
+    //             }
+    //         } // item
 
-            Item {
-                width: Theme.iconSize
-                height: Theme.iconSize
-                visible: MediaService.canNext
-                anchors.verticalCenter: parent.verticalCenter
+    //         Item {
+    //             width: Theme.iconSize
+    //             height: Theme.iconSize
+    //             visible: MediaService.canNext
+    //             anchors.verticalCenter: parent.verticalCenter
                 
-                ColoredIcon {
-                    source: Qt.resolvedUrl("../../../assets/icons/media/fast-forward.svg")
-                    color: Theme.colorPrimary
-                }
+    //             ColoredIcon {
+    //                 source: Qt.resolvedUrl("../../../assets/icons/media/fast-forward.svg")
+    //                 color: Theme.colorPrimary
+    //             }
 
-                MouseArea { 
-                    anchors.fill: parent
-                    cursorShape: Qt.PointingHandCursor
-                    onClicked: MediaService.next() 
-                }
-            } // item
-        // media controls
-        } // row
+    //             MouseArea { 
+    //                 anchors.fill: parent
+    //                 cursorShape: Qt.PointingHandCursor
+    //                 onClicked: MediaService.next() 
+    //             }
+    //         } // item
+    //     // media controls
+    //     } // row
 
         
-        Item { // osd
-            width:  Theme.iconSize
-            height: Theme.iconSize
-            anchors.right:          parent.right
-            anchors.verticalCenter: parent.verticalCenter
+    //     Item { // osd
+    //         width:  Theme.iconSize
+    //         height: Theme.iconSize
+    //         anchors.right:          parent.right
+    //         anchors.verticalCenter: parent.verticalCenter
 
-            ColoredIcon {
-                source: Qt.resolvedUrl("../../../assets/icons/media/info.svg")
-                color: Osd.mediaOsdEnabled ? Theme.colorPrimary : Theme.colorSecondary
-                Behavior on color { ColorAnimation { duration: 100 } }
-            }
+    //         ColoredIcon {
+    //             source: Qt.resolvedUrl("../../../assets/icons/media/info.svg")
+    //             color: Osd.mediaOsdEnabled ? Theme.colorPrimary : Theme.colorSecondary
+    //             Behavior on color { ColorAnimation { duration: 100 } }
+    //         }
 
-            MouseArea { 
-                anchors.fill: parent
-                cursorShape: Qt.PointingHandCursor
-                onClicked: Osd.mediaOsdEnabled = !Osd.mediaOsdEnabled 
-            }
-        } // item
+    //         MouseArea { 
+    //             anchors.fill: parent
+    //             cursorShape: Qt.PointingHandCursor
+    //             onClicked: Osd.mediaOsdEnabled = !Osd.mediaOsdEnabled 
+    //         }
+    //     } // item
 
-    } // item
-
-
-} // column
+    // } // item

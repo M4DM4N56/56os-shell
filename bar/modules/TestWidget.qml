@@ -24,27 +24,24 @@ Item {
     }
 
     Text {
-        id:                 label
-        anchors.centerIn:   parent
-        text:               root.panelOpen ? "▼ test" : "▲ test"
-        color:              Theme.colorPrimary
-        font.family:        Theme.fontFamily
-        font.pixelSize:     Theme.fontBase
-        font.weight:        Font.DemiBold
+        id:               label
+        anchors.centerIn: parent
+        text:             root.panelOpen ? "▼ test" : "▲ test"
+        color:            Theme.colorPrimary
+        font.family:      Theme.fontFamily
+        font.pixelSize:   Theme.fontBase
+        font.weight:      Font.DemiBold
     }
 
-    MouseArea {
-        anchors.fill: parent
-        cursorShape:  Qt.PointingHandCursor
-        onClicked: {
-            PanelLogic.toggle("test", {
-                owner:       root,
-                content:     testContent,
-                width:       200,
-                anchorX:     root.mapToGlobal(0, 0).x,
-                anchorWidth: root.width,
-                screen:      root.screen
-            })
-        }
+    HoverHandler {
+        cursorShape: Qt.PointingHandCursor
+        onHoveredChanged: if (hovered) PanelLogic.open("test", {
+            owner:       root,
+            content:     testContent,
+            width:       200,
+            anchorX:     root.mapToGlobal(0, 0).x,
+            anchorWidth: root.width,
+            screen:      root.screen
+        })
     }
 }

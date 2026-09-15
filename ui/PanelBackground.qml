@@ -6,82 +6,60 @@ import ".."
 Item {
     id: root
 
-    property real  panelW:     240
-    property real  panelH:     0            // live (animated) height, from panel top
-    property real  barHeight:  0            // where the panel necks out of the bar
-    property real  radius:     Theme.panelJoinRadius
-    property real  joinRadius: Theme.panelJoinRadius
-    property bool  capLeft:    true
-    property bool  capRight:   true
-    property color color:      Theme.colorBackground
+    property real  panelW:        240
+    property real  panelH:        0
+    property real  radius:        Theme.panelRadius
+    property real  joinRadius:    Theme.panelJoinRadius
+    property bool  capLeft:   true
+    property bool  capRight:  true
+    property color color:     Theme.colorBackground
 
-    // cap radius grows from 0 as the panel emerges below the bar, then locks
-    // to joinRadius. no cap until the panel has cleared the bar.
-    readonly property real effJoin: Math.max(0, Math.min(joinRadius, panelH - barHeight))
+    // cap grows from 0 as the panel extends downward, locks at joinRadius
+    readonly property real effJoin: Math.min(joinRadius, panelH)
 
-    // caps are drawn outside our [0,panelW] box — never clip
+    // caps extend outside [0, panelW] — never clip
     clip: false
 
     Shape {
         anchors.fill: parent
         preferredRendererType: Shape.CurveRenderer
 
-        // panel body: square top (sits over the bar), rounded bottom corners
         ShapePath {
             fillColor:   root.color
             strokeWidth: -1
-            PathSvg { path: root.bodyPath() }
-        }
-
-        // junction caps: concave fillets at barHeight on the non-flush sides
-        ShapePath {
-            fillColor:   root.color
-            strokeWidth: -1
-            PathSvg { path: root.capsPath() }
+            PathSvg { path: root.fullPath() }
         }
     }
 
-    function bodyPath() {
+    function fullPath() {
         var w = panelW
         var h = panelH
+        var j = effJoin
         if (h <= 0.5) return "M 0 0 Z"
 
         var r = Math.min(radius, h / 2, w / 2)
-
-        var d = "M 0 0 "
-        d += `L 0 ${h - r} `
-        d += `A ${r} ${r} 0 0 0 ${r} ${h} `       // bottom-left  convex
-        d += `L ${w - r} ${h} `
-        d += `A ${r} ${r} 0 0 0 ${w} ${h - r} `   // bottom-right convex
-        d += `L ${w} 0 `
-        d += "Z"
-        return d
-    }
-
-    function capsPath() {
-        var w  = panelW
-        var bh = barHeight
-        var j  = effJoin
-        if (j <= 0.5) return "M 0 0 Z"
-
         var d = ""
 
-        // left fillet: curves from the bar bottom down into the panel's left side
-        if (capLeft) {
-            d += `M ${-j} ${bh} `
-            d += `A ${j} ${j} 0 0 1 0 ${bh + j} `
-            d += `L 0 ${bh} `
-            d += "Z "
+        if (capLeft && j > 0.5) {
+            d += `M ${-j} 0 `
+            d += `A ${j} ${j} 0 0 1 0 ${j} `
+        } else {
+            d += `M 0 0 `
         }
 
-        // right fillet: mirror of the left
-        if (capRight) {
-            d += `M ${w + j} ${bh} `
-            d += `A ${j} ${j} 0 0 0 ${w} ${bh + j} `
-            d += `L ${w} ${bh} `
-            d += "Z "
+        d += `L 0 ${h - r} `
+        d += `A ${r} ${r} 0 0 0 ${r} ${h} `
+        d += `L ${w - r} ${h} `
+        d += `A ${r} ${r} 0 0 0 ${w} ${h - r} `
+
+        if (capRight && j > 0.5) {
+            d += `L ${w} ${j} `
+            d += `A ${j} ${j} 0 0 1 ${w + j} 0 `
+        } else {
+            d += `L ${w} 0 `
         }
 
-        return d === "" ? "M 0 0 Z" : d
+        d += "Z"
+        return d
     }
 } // item

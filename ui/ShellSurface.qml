@@ -10,7 +10,7 @@ import "../utils"
 
 Scope {
 
-    IpcHandler { // allows "qs -c ~/.config/quickshell/56os ipc call bar toggle" to work as a command & keybind
+    IpcHandler {
         target: "bar"
         function toggle(): void {
             if (PanelLogic.barVisible) PanelLogic.closeAll()
@@ -40,19 +40,28 @@ Scope {
 
                 readonly property var hyprMonitor: Utils.findMonitor( Hyprland.monitors?.values ?? [], screen.name )
 
-                // should the bar be shown
                 readonly property bool shouldShowBar: PanelLogic.barVisible && !(hyprMonitor?.activeWorkspace?.hasFullscreen ?? false)
 
                 exclusiveZone: shouldShowBar ? Theme.barHeight : 0
 
-                // input mask:
-                // bar showing -> only bar strip is clickable
-                // bar hidden  -> empty Region = no clickable area, all clicks pass through
-                // panel open  -> full surface clickable so the PanelHost MouseArea can catch outside clicks
+                // mask covers bar strip + animated panel height; shrinks to bar-only when no panel
                 Region { id: emptyRegion }
-                Region { id: barRegion;  item: barContent }
-                Region { id: fullRegion; item: surfaceFill }
-                Item   { id: surfaceFill; anchors.fill: parent }
+                Item {
+                    id: hoverMaskItem
+                    x: 0; y: 0
+                    width:  parent.width
+                    height: Theme.barHeight + panelHost.panelVisibleHeight
+                }
+                Region { id: hoverRegion; item: hoverMaskItem }
+
+                mask: shouldShowBar ? hoverRegion : emptyRegion
+
+                PanelHost {
+                    id:           panelHost
+                    anchors.fill: parent
+                    screen:       modelData
+                    barHovered:   barContent.hovered
+                }
 
                 BarContent {
                     id:        barContent
@@ -60,30 +69,16 @@ Scope {
                     modelData: surface.modelData
                     anchors { top: parent.top; left: parent.left; right: parent.right }
                     height:    Theme.barHeight
-                    visible:   surface.shouldShowBar  //content hides, surface stays
+                    visible:   surface.shouldShowBar
                     opacity:   surface.shouldShowBar ? 1.0 : 0.0
+
+                    panelAtLeftEdge:  panelHost.revealProgress > 0 && panelHost.isAtLeftEdge
+                    panelAtRightEdge: panelHost.revealProgress > 0 && panelHost.isAtRightEdge
 
                     Behavior on opacity { NumberAnimation { duration: Theme.animFast } }
                 }
 
-                // bool checking whether a panel is currently open on this bar
-                readonly property bool panelHere: PanelLogic.isOpen && PanelLogic.hostScreen?.name === modelData.name
-
-                // update mask to account for panel open state
-                mask: {
-                    if (!shouldShowBar) return emptyRegion
-                    if (panelHere)      return fullRegion
-                    return barRegion
-                }
-
-                PanelHost {
-                    anchors.fill: parent
-                    screen:       modelData
-                }
-
-
             } // panel window
-
         } // delegate component
     } // variants
 } // scope

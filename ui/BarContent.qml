@@ -12,13 +12,32 @@ Item {
     id: root
     required property var screen
     required property var modelData
+    property bool panelAtLeftEdge:  false
+    property bool panelAtRightEdge: false
+    readonly property bool hovered: barHover.hovered
+
+    onPanelAtLeftEdgeChanged: {
+        if (panelAtLeftEdge) { leftCornerAnim.stop();  barRect.bottomLeftRadius  = 0 }
+        else                   leftCornerAnim.restart()
+    }
+    onPanelAtRightEdgeChanged: {
+        if (panelAtRightEdge) { rightCornerAnim.stop(); barRect.bottomRightRadius = 0 }
+        else                    rightCornerAnim.restart()
+    }
+
+    NumberAnimation { id: leftCornerAnim;  target: barRect; property: "bottomLeftRadius";  to: Theme.barRadius; duration: Theme.animFast; easing.type: Easing.OutCubic }
+    NumberAnimation { id: rightCornerAnim; target: barRect; property: "bottomRightRadius"; to: Theme.barRadius; duration: Theme.animFast; easing.type: Easing.OutCubic }
 
     Rectangle {
-        anchors.fill:  parent
-        color:         Theme.colorBackground
-        topLeftRadius:  0
-        topRightRadius: 0
-        radius:         Theme.barRadius
+        id:                barRect
+        anchors.fill:      parent
+        color:             Theme.colorBackground
+        topLeftRadius:     0
+        topRightRadius:    0
+        bottomLeftRadius:  Theme.barRadius
+        bottomRightRadius: Theme.barRadius
+
+        HoverHandler { id: barHover }
 
         RowLayout { // left side
             anchors.left:           parent.left

@@ -24,37 +24,47 @@ Singleton {
 // geometry ---
     // bar
     readonly property int barHeight:        36      // the height of the bar
-    readonly property int barRadius:        10       // the roundness of the bar's corners
-    readonly property int moduleSpacing:    16      // gap between modules
-    readonly property int modulePadding:    8       // a module's horizontal padding
+    readonly property int barRadius:        10      // the roundness of the bar's corners
+    readonly property int moduleSpacing:    8       // gap between modules
+    readonly property int modulePadding:    4       // a module's horizontal padding
+    readonly property int barPadding:       8       // internal gap between bar edge and modules
     readonly property int barMarginSide:    6       // margin between monitor edge and bar sides
     readonly property int barMarginTop:     0       // margin between monitor edge and bar sides
-    readonly property int barPadding:       16      // internal gap between bar edge and modules
+    readonly property int barEdgeSpace:     20      // minimum clearance between panel and bar edge
 
     // pill
     readonly property int wsPillHeight:     6
     readonly property int wsPillWidth:      36
     readonly property int wsPillSpacing:    4       // spacing between occupied pills
 
+    // button
+    readonly property int buttonRadius:     4
+    readonly property int buttonPaddingH:   4
+    readonly property int buttonPaddingV:   6
+    readonly property int indicatorDot:     7
+
     // widget
-    readonly property int mediaWidgetMaxWidth: 600
+    readonly property int mediaWidgetWidth: 600
 
     // pop up panels
     readonly property int mediaPanelWidth:  400
     readonly property int albumArtRadius:   8
     readonly property int albumArtSize:     80
+
     readonly property int volumePanelWidth: 240     // the entire width of the volume widget
-    readonly property int panelPadding:     20      // padding on all sides of pop up panels
-    readonly property int panelTopPadding:  8
-    readonly property int panelJoinRadius:  10       // curvature from bar to panel sides
+    
+    readonly property int panelPaddingH:    20      // padding on all sides of pop up panels
+    readonly property int panelPaddingV:    20
+    readonly property int panelRadius:      10      // corner radius of panel
+    readonly property int panelJoinRadius:  12      // concave junction cap radius
 
     // icons
-    readonly property int iconSize:        16
+    readonly property int iconSize:         16
 
     // osd
-    readonly property int osdSimpleWidth:  90       // icon + percentage
-    readonly property int osdMediaWidth:   300      // album art + track info
-    readonly property int osdMediaHeight:  80       // taller than bar height
+    readonly property int osdSimpleWidth:   90       // icon + percentage
+    readonly property int osdMediaWidth:    300      // album art + track info
+    readonly property int osdMediaHeight:   80       // taller than bar height
 
 // --- geometry
 

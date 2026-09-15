@@ -1,4 +1,7 @@
 ColoredIcon ColoredIcon.qml
+Button Button.qml
+
+MediaSeekBar MediaSeekBar.qml
 
 ShellSurface ShellSurface.qml
 BarContent BarContent.qml
