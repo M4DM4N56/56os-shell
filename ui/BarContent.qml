@@ -4,9 +4,11 @@ import QtQuick.Layouts
 import Quickshell.Hyprland
 
 import "../"
-import "../bar/modules/"
+import "../bar/modules/clock"
 import "../bar/modules/volume"
 import "../bar/modules/media"
+import "../bar/modules/workspace"
+import "../bar/modules/test"
 
 Item {
     id: root
@@ -20,6 +22,7 @@ Item {
         if (panelAtLeftEdge) { leftCornerAnim.stop();  barRect.bottomLeftRadius  = 0 }
         else                   leftCornerAnim.restart()
     }
+    
     onPanelAtRightEdgeChanged: {
         if (panelAtRightEdge) { rightCornerAnim.stop(); barRect.bottomRightRadius = 0 }
         else                    rightCornerAnim.restart()
@@ -45,14 +48,14 @@ Item {
             anchors.leftMargin:     Theme.barPadding
             spacing:                Theme.moduleSpacing
 
-            ClockWidget {}
-            WorkspaceIndicator { screen: root.screen }
+            ClockWidget     { screen: root.screen }
+            WorkspaceWidget { screen: root.screen }
         }
 
         RowLayout { // center
             anchors.centerIn:       parent
             anchors.verticalCenter: parent.verticalCenter
-            MediaWidget { screen: root.screen }
+            MediaWidget     { screen: root.screen }
         }
 
         RowLayout { // right side
@@ -61,9 +64,7 @@ Item {
             anchors.rightMargin:    Theme.barPadding
             spacing:                Theme.moduleSpacing
 
-            VolumeWidget { screen: root.screen }
-            VolumeWidget { screen: root.screen }
-            VolumeWidget { screen: root.screen }
+            VolumeWidget    { screen: root.screen }
         }
 
     } // rectangle

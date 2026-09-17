@@ -56,7 +56,7 @@ Item {
         Rectangle {
             anchors.verticalCenter: parent.verticalCenter
             width:                  parent.width
-            height:                 2
+            height:                 4
             radius:                 1.5
             color:                  Qt.alpha(Theme.colorSecondary, 1)
 

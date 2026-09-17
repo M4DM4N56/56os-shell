@@ -8,5 +8,5 @@ import "./ui"
 
 Scope {
 	ShellSurface {}
-	OsdWindow { }
+	OsdWindow {}
 }

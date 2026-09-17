@@ -64,7 +64,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             implicitHeight:         Theme.barHeight
             paddingH:               6
-            hoverInsetV:            3
+            hoverInsetV:            6
             iconSource:             Qt.resolvedUrl("../../../assets/icons/media/rewind.svg")
             iconColor:              MediaService.canPrevious ? Theme.colorPrimary : Theme.colorSecondary//Qt.alpha(Theme.colorPrimary, 0.3)
             onClicked:              MediaService.previous()
@@ -76,7 +76,7 @@ Item {
             anchors.centerIn:       parent
             implicitHeight:         Theme.barHeight
             paddingH:               90
-            hoverInsetV:            3
+            hoverInsetV:            6
             iconSource:             Qt.resolvedUrl("../../../assets/icons/media/" + (MediaService.isPlaying ? "pause.svg" : "play.svg"))
             onClicked:              MediaService.togglePlay()
         }
@@ -87,7 +87,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             implicitHeight:         Theme.barHeight
             paddingH:               6
-            hoverInsetV:            3
+            hoverInsetV:            6
             iconSource:             Qt.resolvedUrl("../../../assets/icons/media/fast-forward.svg")
             iconColor:              MediaService.canNext ? Theme.colorPrimary : Theme.colorSecondary//Qt.alpha(Theme.colorPrimary, 0.3)
             onClicked:              MediaService.next()
@@ -100,7 +100,7 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             implicitHeight:         Theme.barHeight
             paddingH:               6
-            hoverInsetV:            3
+            hoverInsetV:            6
             iconSource:             Qt.resolvedUrl("../../../assets/icons/media/info.svg")
             iconColor:              Osd.mediaOsdEnabled ? Theme.colorPrimary : Theme.colorSecondary//Qt.alpha(Theme.colorPrimary, 0.3)
             onClicked:              Osd.mediaOsdEnabled = !Osd.mediaOsdEnabled

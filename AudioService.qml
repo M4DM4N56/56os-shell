@@ -21,8 +21,8 @@ Singleton {
         )
     }
 
-    onVolumePctChanged: Osd.triggerSimple("volume/" + volumeIconName, volumePct + "%")
-    onMutedChanged:     Osd.triggerSimple("volume/" + volumeIconName, muted ? "Muted" : volumePct + "%")
+    onVolumePctChanged: Osd.trigger("volume/" + volumeIconName, volumePct + "%")
+    onMutedChanged:     Osd.trigger("volume/" + volumeIconName, muted ? "Muted" : volumePct + "%")
 
     readonly property int  volumePct: Math.round((Pipewire.defaultAudioSink?.audio?.volume ?? 0) * 100)
     readonly property bool muted:     Pipewire.defaultAudioSink?.audio?.muted ?? false
@@ -45,9 +45,11 @@ Singleton {
         if (deviceOverrides[desc]) return deviceOverrides[desc].icon
         let name = (node.name ?? "").toLowerCase()
         desc = desc.toLowerCase()
+
         if (name.includes("bluez") || desc.includes("bluetooth"))   return "bluetooth.svg"
         if (desc.includes("headphone") || desc.includes("headset")) return "headphones.svg"
         if (desc.includes("hdmi") || desc.includes("display"))      return "monitor.svg"
+        
         return "speaker.svg"
     }
 

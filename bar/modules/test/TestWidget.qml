@@ -1,8 +1,8 @@
 // bar/modules/TestWidget.qml
 import QtQuick
 import Quickshell
-import "../.."
-import "../../ui"
+import "../../.."
+import "../../../ui"
 
 Item {
     id: root

@@ -1,4 +1,4 @@
-// OsdWindow.qml
+// osd/OsdWindow.qml
 
 import QtQuick
 import Quickshell
@@ -10,11 +10,9 @@ import "../ui/"
 import "../utils/"
 
 Scope {
-
     Variants {
 
         model: Quickshell.screens
-
         delegate: Component {
 
             PanelWindow {
@@ -22,9 +20,7 @@ Scope {
                 property bool dismissing: false
                 required property var modelData
 
-                readonly property var hyprMonitor: Utils.findMonitor(
-                    Hyprland.monitors?.values ?? [], modelData.name)
-                    
+                readonly property var hyprMonitor: Utils.findMonitor(Hyprland.monitors?.values ?? [], modelData.name)
                 readonly property bool monitorObscured:   hyprMonitor?.activeWorkspace?.hasFullscreen ?? false
                 readonly property bool barHiddenHere:     !PanelLogic.barVisible || monitorObscured
 
@@ -40,74 +36,67 @@ Scope {
                 }
 
                 Timer {
-                    id:       dismissTimer
-                    interval: 260   // slightly longer than slideY animation duration
-                    onTriggered: parent.dismissing = false
+                    id:             dismissTimer
+                    interval:       260
+                    onTriggered:    parent.dismissing = false
                 }
 
-                screen:         modelData
-                color:          "transparent"
-                anchors { top: true; left: true; right: true }
-                implicitHeight: Theme.barHeight
-                visible: (Osd.showing || dismissing) && barHiddenHere
-                WlrLayershell.layer:         WlrLayer.Overlay
-                WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
-                exclusionMode: ExclusionMode.Ignore
+                screen:                         modelData
+                color:                          "transparent"
+                anchors                         { top: true; left: true; right: true }
+                implicitHeight:                 osdRect.height
+                visible:                        (Osd.showing || dismissing) && barHiddenHere
+                WlrLayershell.layer:            WlrLayer.Overlay
+                WlrLayershell.keyboardFocus:    WlrKeyboardFocus.None
+                exclusionMode:                  ExclusionMode.Ignore
 
                 Rectangle {
-                    id:                       osdRect
-                    width:                    Theme.osdSimpleWidth
-                    height:                   Theme.barHeight
+                    id: osdRect
                     anchors.horizontalCenter: parent.horizontalCenter
-                    // y defaults to 0 — top of screen, where we want it when showing
-
+                    
                     color:             Theme.colorBackground
                     topLeftRadius:     0
                     topRightRadius:    0
                     bottomLeftRadius:  Theme.barRadius
                     bottomRightRadius: Theme.barRadius
 
+                    height: Theme.barHeight
+                    width: Math.min( osdContent.implicitWidth + Theme.panelPaddingH * 2, Theme.osdMaxWidth )
+                    Behavior on width { NumberAnimation { duration: Theme.animFast; easing.type: Easing.OutCubic } }
+
                     // hidden: translate upward off screen
                     // showing: back to y=0
                     property real slideY: Osd.showing ? 0 : -height
-                    Behavior on slideY {
-                        NumberAnimation { duration: 250; easing.type: Easing.OutCubic }
-                    }
-
                     transform: Translate { y: osdRect.slideY }
+                    Behavior on slideY { NumberAnimation { duration: 250; easing.type: Easing.OutCubic } }
 
                     Row {
-                        anchors.centerIn: parent
-                        spacing:          6
-                        visible:          Osd.osdType === "simple"
+                        id:                 osdContent
+                        anchors.centerIn:   parent
+                        spacing:            6
 
-                        Item {
-                            width:  Theme.iconSize
-                            height: Theme.iconSize
+                        ColoredIcon {
                             anchors.verticalCenter: parent.verticalCenter
-
-                            ColoredIcon {
-                                source: Osd.showing
-                                    ? Qt.resolvedUrl("../assets/icons/" + Osd.simpleIcon)
-                                    : ""
-                                color: Theme.colorPrimary
-                            }
+                            source: (Osd.showing && Osd.icon.toString() !== "") ? Qt.resolvedUrl("../assets/icons/" + Osd.icon) : ""
+                            visible: Osd.icon.toString() !== ""
                         }
-
 
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
-                            text:           Osd.simpleValue
+                            text:           Osd.text
                             color:          Theme.colorPrimary
                             font.family:    Theme.fontFamily
                             font.pixelSize: Theme.fontBase
                             font.weight:    Font.DemiBold
+                            width:          Math.min( implicitWidth, Theme.osdMaxWidth - Theme.panelPaddingH * 2 )
+                            elide:          Text.ElideRight
                         }
-                    }
-                }
-            }
+                    } // row
+
+                } // rectangle
+
+            } // panel window
         } // component
 
     } // variants
-
 } // scope

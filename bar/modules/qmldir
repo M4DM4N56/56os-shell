@@ -1,5 +1,1 @@
-ClockWidget         ClockWidget.qml
-WorkspaceIndicator  WorkspaceIndicator.qml
-
-
-TestWidget          TestWidget.qml
+modules modules.qml

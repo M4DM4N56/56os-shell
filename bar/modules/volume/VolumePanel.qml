@@ -22,14 +22,14 @@ Column {
         onClicked:      AudioService.toggleMute()
     }
 
-// divider
+    // divider
     Rectangle {
         width:  parent.width
         height: 1
         color:  Qt.alpha(Theme.colorSecondary, 1)
     }
 
-// device list
+    // device list
     Repeater {
         model: AudioService.sinkNodes
 

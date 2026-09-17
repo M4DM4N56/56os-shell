@@ -81,4 +81,10 @@ Singleton {
         return m + ":" + (s < 10 ? "0" : "") + s
     }
 
+    onTrackTitleChanged: { // call media osd when track updates
+        if (!Osd.mediaOsdEnabled || !trackTitle) return
+        let display = (trackArtist && trackTitle) ? trackArtist + "  —  " + trackTitle : (trackArtist || trackTitle)
+        Osd.trigger("", display)
+    }
+
 } // singleton

@@ -24,8 +24,9 @@ Item {
 
     // center panel under widget, then clamp to barEdgeSpace from each edge
     // if the widget is flush with a bar edge, snap the panel fully to that edge
+    // uses panel.targetWidth (not the animating panel.width) so x and width animate together
     readonly property real panelLeft: {
-        let w  = PanelLogic.requestedWidth
+        let w  = panel.targetWidth
         let nl = widgetSurfaceX + PanelLogic.anchorWidth / 2 - w / 2
 
         if (nl < Theme.barEdgeSpace)
@@ -63,13 +64,17 @@ Item {
         id: panel
 
         x:     host.panelLeft
-        width: PanelLogic.requestedWidth
         y:     Theme.barHeight
         clip:  false
 
-        readonly property real naturalHeight: contentLoader.implicitHeight + Theme.panelPaddingV
+        readonly property real naturalHeight: contentLoader.implicitHeight + (Theme.panelPaddingV * 1.5)  // 1.5: 1.0 for bottom padding, 0.5 for top padding
 
         height: reveal.progress * naturalHeight
+
+        readonly property real targetWidth: PanelLogic.requestedWidth
+
+        width: targetWidth
+
 
         // panel animation morphs
         Behavior on x     { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animFast; easing.type: Easing.OutCubic } }
@@ -93,8 +98,10 @@ Item {
                 id: contentLoader
 
                 x:     Theme.panelPaddingH
-                width: panel.width - Theme.panelPaddingH * 2
-                y:     0 //Theme.panelTopPadding
+                y:     Theme.panelPaddingV * 0.5
+                width: PanelLogic.requestedWidth > 0
+                    ? panel.width - Theme.panelPaddingH * 2
+                    : undefined
 
                 sourceComponent: (host.active || reveal.progress > 0.01)
                     ? PanelLogic.content
