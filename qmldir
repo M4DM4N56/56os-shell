@@ -2,8 +2,11 @@ singleton Theme Theme.qml
 singleton PanelLogic PanelLogic.qml
 singleton Osd Osd.qml
 
+singleton ProgramIcons ProgramIcons.qml
+
+
 singleton Time Time.qml
+singleton WorkspaceService WorkspaceService.qml
 singleton AudioService AudioService.qml
 singleton MediaService MediaService.qml
-singleton WorkspaceService WorkspaceService.qml
-singleton ProgramIcons ProgramIcons.qml
+singleton NotificationService NotificationService.qml

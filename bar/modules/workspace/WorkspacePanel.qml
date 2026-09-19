@@ -48,8 +48,8 @@ Column {
                 ColoredIcon {
                     source: Qt.resolvedUrl("../../../assets/icons/numbers/" + displayNum + ".svg")
                     color:  isActive ? Theme.colorPrimary : Qt.alpha(Theme.colorPrimary, 0.4)
-                    Layout.preferredWidth:  Theme.iconSize
-                    Layout.preferredHeight: Theme.iconSize
+                    Layout.preferredWidth:  Theme.mediumIconSize
+                    Layout.preferredHeight: Theme.mediumIconSize
                     Layout.alignment:       Qt.AlignVCenter
                 }
 
@@ -64,15 +64,11 @@ Column {
                         delegate: Item {
                             required property var modelData
 
-                            readonly property string iconFile: ProgramIcons.icon(modelData.lastIpcObject?.class ?? "")
-                            readonly property bool   hasIcon:  iconFile !== ""
-
-                            width:   Theme.iconSize
-                            height:  Theme.iconSize
-                            visible: hasIcon
+                            width:  Theme.mediumIconSize
+                            height: Theme.mediumIconSize
 
                             ColoredIcon {
-                                source: Qt.resolvedUrl("../../../assets/icons/programs/" + iconFile)
+                                source: ProgramIcons.url(modelData.lastIpcObject?.class ?? "")
                                 color:  isActive ? Theme.colorPrimary : Qt.alpha(Theme.colorPrimary, 0.5)
                             }
                         }

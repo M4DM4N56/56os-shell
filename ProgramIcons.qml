@@ -18,20 +18,20 @@ Singleton {
         "protonvpn-app":    "private.svg",
         "nicotine":         "nicotine.svg",
         "picard":           "music-info.svg",
-        "LRCGET":           "lyrics.svg",
-        "prismlauncher":    "game.svg",
+        "lrcget":           "lyrics.svg",
         "java":             "game.svg",
         "dolphin":          "file.svg"
     })
 
-    // returns the icon filename, falling back to cube.svg if unknown
-    function icon(windowClass) {
-        return iconMap[windowClass.toLowerCase()] ?? "cube.svg"
+    // always returns a url, cube.svg for unknowns
+    function url(windowClass) {
+        let file = iconMap[(windowClass ?? "").toLowerCase()] ?? "cube.svg"
+        return Qt.resolvedUrl("assets/icons/programs/" + file)
     }
 
-    // returns a fully resolved URL or "" — safe to pass directly to source:
-    function url(windowClass) {
-        let file = icon(windowClass)
+    // returns "" for unknowns
+    function urlOrEmpty(windowClass) {
+        let file = iconMap[(windowClass ?? "").toLowerCase()]
         return file ? Qt.resolvedUrl("assets/icons/programs/" + file) : ""
     }
 }

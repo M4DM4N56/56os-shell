@@ -14,7 +14,7 @@ QtObject {
 
     Behavior on progress {
         NumberAnimation {
-            duration:    Theme.animMedium
+            duration:    Theme.animSlow
             easing.type: Easing.OutExpo
         }
     }

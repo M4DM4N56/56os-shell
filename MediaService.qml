@@ -74,13 +74,6 @@ Singleton {
             activePlayer.position = seconds
     }
 
-    function formatTime(seconds) { // format time from ssss -> mm:ss for displays
-        let s = Math.floor(seconds)
-        let m = Math.floor(s / 60)
-        s = s % 60
-        return m + ":" + (s < 10 ? "0" : "") + s
-    }
-
     onTrackTitleChanged: { // call media osd when track updates
         if (!Osd.mediaOsdEnabled || !trackTitle) return
         let display = (trackArtist && trackTitle) ? trackArtist + "  —  " + trackTitle : (trackArtist || trackTitle)

@@ -77,8 +77,10 @@ Item {
 
 
         // panel animation morphs
-        Behavior on x     { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animFast; easing.type: Easing.OutCubic } }
-        Behavior on width { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animFast; easing.type: Easing.OutCubic } }
+        Behavior on x       { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
+        Behavior on y       { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
+        Behavior on width   { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
+        Behavior on height  { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
 
         HoverHandler { id: panelHover }
 

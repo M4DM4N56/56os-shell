@@ -1,5 +1,6 @@
 ColoredIcon ColoredIcon.qml
 Button Button.qml
+TabMenu TabMenu.qml
 
 MediaSeekBar MediaSeekBar.qml
 

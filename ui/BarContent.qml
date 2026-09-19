@@ -8,14 +8,16 @@ import "../bar/modules/clock"
 import "../bar/modules/volume"
 import "../bar/modules/media"
 import "../bar/modules/workspace"
-import "../bar/modules/test"
+import "../bar/modules/notifications"
 
 Item {
     id: root
     required property var screen
     required property var modelData
+
     property bool panelAtLeftEdge:  false
     property bool panelAtRightEdge: false
+    
     readonly property bool hovered: barHover.hovered
 
     onPanelAtLeftEdgeChanged: {
@@ -48,8 +50,9 @@ Item {
             anchors.leftMargin:     Theme.barPadding
             spacing:                Theme.moduleSpacing
 
-            ClockWidget     { screen: root.screen }
-            WorkspaceWidget { screen: root.screen }
+            ClockWidget         { screen: root.screen }
+            WorkspaceWidget     { screen: root.screen }
+            NotificationWidget  {screen: root.screen}
         }
 
         RowLayout { // center

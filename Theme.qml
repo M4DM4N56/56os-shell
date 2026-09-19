@@ -20,7 +20,6 @@ Singleton {
     readonly property FontLoader feliumExtraBold:   FontLoader { source: "file:///home/luca/.local/share/fonts/TBJFeliumMono/tbj-felium-mono-demo.extra-bold.ttf" }
 // --- font
 
-
 // geometry ---
     // bar
     readonly property int barHeight:        36      // the height of the bar
@@ -49,36 +48,50 @@ Singleton {
     readonly property int albumArtRadius:   8
     readonly property int albumArtSize:     80
 
-    readonly property int clockPanelWidth:      300     // the entire width of the volume widget
-    readonly property int workspacePanelWidth:  180     // the entire width of the volume widget
+    readonly property int clockPanelWidth:      300
+    readonly property int workspacePanelWidth:  180
     readonly property int mediaPanelWidth:      400
-    readonly property int volumePanelWidth:     240     // the entire width of the volume widget
-    
-    readonly property int panelPaddingH:    20      // padding on all sides of pop up panels
-    readonly property int panelPaddingV:    10
+    readonly property int volumePanelWidth:     240
+    readonly property int notifPanelWidth:      250
+    readonly property int notifToastWidth:      320
+
+    readonly property int panelPaddingH:    16
+    readonly property int panelPaddingV:    16
     readonly property int panelRadius:      10      // corner radius of panel
     readonly property int panelJoinRadius:  12      // concave junction cap radius
 
     // icons
     readonly property int iconSize:         16
-    readonly property int largeIconSize:    18
+    readonly property int mediumIconSize:   18
+    readonly property int largeIconSize:    24
 
     // osd
     readonly property int osdMaxWidth:      640
-    readonly property int osdMediaHeight:   50       // taller than bar height
+    readonly property int osdMediaHeight:   50
+
+    // notifications
+    readonly property int   notifRadius:          10
+    readonly property int   notifToastPaddingH:   16
+    readonly property int   notifToastPaddingV:   16
+    readonly property int   notifCompactPaddingV: 8
+    readonly property int   notifCompactPaddingH: 10
+    readonly property int   notifCompactPaddingR: 4
+    readonly property int   notifIconSpacing:     8
+    readonly property color notifBodyColor:       Qt.alpha(colorPrimary, 0.6)
+    readonly property color notifHoverColor:      Qt.alpha(colorSecondary, 0.25)
 
 // --- geometry
 
 // animation ---
     readonly property int animFast:         200
-    readonly property int animMedium:       600
-    readonly property int animSlow:         400
+    readonly property int animMedium:       400
+    readonly property int animSlow:         600
 // --- animation
 
 // colors ---
-    readonly property color colorBackground:    "#C3C2C1"//"#161616"//"#dfe2ef"//"#e2e2e9"    // neutral white for all variants
-    readonly property color colorPrimary:       "#2e2e2e"//"#8EBD93"//"#292e4d"//"#454545"    // neutral gray for all
-    readonly property color colorSecondary:     "#90B2A1"//"#33503E"//"#abc7ff"//"#C0C4EB"    // scheme-vibrant secondary
+    readonly property color colorBackground:    "#C3C2C1"               //"#161616"//"#dfe2ef"//"#e2e2e9"    // neutral white for all variants
+    readonly property color colorPrimary:       "#2e2e2e"               //"#8EBD93"//"#292e4d"//"#454545"    // neutral gray for all
+    readonly property color colorSecondary:     "#7D8E81"  //"#90B2A1"//"#33503E"//"#abc7ff"//"#C0C4EB"    // scheme-vibrant secondary
 // --- colors
 
 

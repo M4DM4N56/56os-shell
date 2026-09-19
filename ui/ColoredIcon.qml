@@ -21,6 +21,7 @@ Item {
         source: parent.source
         sourceSize: Qt.size(parent.size, parent.size)
         visible: false
+        layer.enabled: true
     }
 
     Rectangle {

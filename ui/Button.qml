@@ -16,14 +16,20 @@ Item {
     property color labelColor:  Theme.colorPrimary
     property color hoverColor:  Qt.alpha(Theme.colorSecondary, 0.5)
 
+    // icon settings
+    property int iconSize:      Theme.iconSize
+
     // label settings
     property int labelSize:     Theme.fontBase
     property int labelWeight:   Font.DemiBold
+    property int labelAlign:    Text.AlignLeft
 
     // layout
     property int paddingH:      Theme.buttonPaddingH
     property int paddingV:      Theme.buttonPaddingV
-    property int hoverInsetV: 0
+    property int hoverInsetV:   0
+    property int hoverInsetH:   0
+    property int hoverRadius:   Theme.buttonRadius
     property bool fillWidth:    false
 
     // active indicator dot
@@ -42,8 +48,10 @@ Item {
             fill:         parent
             topMargin:    root.hoverInsetV
             bottomMargin: root.hoverInsetV
+            leftMargin:   root.hoverInsetH
+            rightMargin:  root.hoverInsetH
         }
-        radius:         Theme.buttonRadius
+        radius:         root.hoverRadius
         color:          hoverColor
         opacity:        area.containsMouse ? 1 : 0
 
@@ -53,14 +61,12 @@ Item {
     RowLayout {
         id: innerRow
 
-        anchors.left:           parent.left
-        anchors.leftMargin:     root.paddingH
-        anchors.verticalCenter: parent.verticalCenter
-        
-        anchors.right:          parent.right
-        // right margin is dependent on whether or not an indicator dot is present
-        // 6 for extra spacing
-        anchors.rightMargin:    root.showDot ? root.paddingH + Theme.indicatorDot + 6 : root.paddingH
+        anchors.verticalCenter:   parent.verticalCenter
+        anchors.horizontalCenter: root.fillWidth ? undefined : parent.horizontalCenter
+        anchors.left:             root.fillWidth ? parent.left : undefined
+        anchors.leftMargin:       root.fillWidth ? root.paddingH : 0
+        anchors.right:            root.fillWidth ? parent.right : undefined
+        anchors.rightMargin:      root.fillWidth ? (root.showDot ? root.paddingH + Theme.indicatorDot + 6 : root.paddingH) : 0
 
         spacing: 4 // spacing between icon and text
 
@@ -68,20 +74,21 @@ Item {
             visible:    root.iconSource.toString() !== ""
             source:     root.iconSource
             color:      root.iconColor
-            Layout.preferredWidth:  Theme.iconSize
-            Layout.preferredHeight: Theme.iconSize
+            Layout.preferredWidth:  root.iconSize
+            Layout.preferredHeight: root.iconSize
         }
 
         Text {
-            visible:            root.label !== ""
-            text:               root.label
-            color:              root.labelColor
-            font.family:        Theme.fontFamily
-            font.pixelSize:     root.labelSize
-            font.weight:        root.labelWeight
-            elide:              Text.ElideRight
-            Layout.fillWidth:   root.fillWidth
-            Layout.alignment:   Qt.AlignVCenter
+            visible:             root.label !== ""
+            text:                root.label
+            color:               root.labelColor
+            font.family:         Theme.fontFamily
+            font.pixelSize:      root.labelSize
+            font.weight:         root.labelWeight
+            elide:               Text.ElideRight
+            horizontalAlignment: root.labelAlign
+            Layout.fillWidth:    root.fillWidth
+            Layout.alignment:    Qt.AlignVCenter
         }
 
     } // rowlayout

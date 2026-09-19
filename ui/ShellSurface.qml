@@ -13,7 +13,7 @@ Scope {
     IpcHandler {
         target: "bar"
         function toggle(): void {
-            if (PanelLogic.barVisible) PanelLogic.closeAll()
+            if (PanelLogic.barVisible) PanelLogic.close()
             PanelLogic.barVisible = !PanelLogic.barVisible
         }
         function show(): void { PanelLogic.barVisible = true  }
@@ -64,13 +64,13 @@ Scope {
                 }
 
                 BarContent {
-                    id:        barContent
-                    screen:    modelData
-                    modelData: surface.modelData
-                    anchors { top: parent.top; left: parent.left; right: parent.right }
-                    height:    Theme.barHeight
-                    visible:   surface.shouldShowBar
-                    opacity:   surface.shouldShowBar ? 1.0 : 0.0
+                    id:         barContent
+                    screen:     modelData
+                    modelData:  surface.modelData
+                    anchors     { top: parent.top; left: parent.left; right: parent.right }
+                    height:     Theme.barHeight
+                    visible:    surface.shouldShowBar
+                    opacity:    surface.shouldShowBar ? 1.0 : 0.0
 
                     panelAtLeftEdge:  panelHost.revealProgress > 0 && panelHost.isAtLeftEdge
                     panelAtRightEdge: panelHost.revealProgress > 0 && panelHost.isAtRightEdge

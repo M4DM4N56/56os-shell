@@ -37,6 +37,5 @@ Singleton {
     }
 
     function close() { openId = ""; owner = null }
-    function closeAll() { close() } // kept to maintain ipc handler, should clean this up later
 
 } // singleton

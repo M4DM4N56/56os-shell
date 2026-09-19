@@ -20,7 +20,6 @@ Column {
             Layout.preferredWidth:  Theme.albumArtSize
             Layout.preferredHeight: Theme.albumArtSize
             Layout.alignment:       Qt.AlignTop
-            Layout.topMargin:       Theme.panelTopPadding
 
             Rectangle {
                 id:            roundMask
@@ -77,7 +76,7 @@ Column {
             Text {
                 width:          parent.width
                 text:           MediaService.trackArtist || "Unknown Artist"
-                color:          Qt.alpha(Theme.colorPrimary, 0.4)
+                color:          Theme.colorSecondary
                 font.family:    Theme.fontFamily
                 font.pixelSize: Theme.fontSmall
                 elide:          Text.ElideRight
@@ -85,103 +84,7 @@ Column {
 
             MediaSeekBar {}
 
-
         } // column
 
     } // row layout
-
-
-    //Item { width: 1; height: 10} // vertical padding
-
-    
 } // column
-
-    // Item {
-    //     width:  parent.width
-    //     height: Theme.iconSize
-
-    // // media controls
-    //     Row {
-    //         anchors.centerIn: parent
-    //         spacing:          32
-
-    //         Item { // rewind button
-    //             width: Theme.iconSize
-    //             height: Theme.iconSize
-    //             visible: MediaService.canPrevious
-    //             anchors.verticalCenter: parent.verticalCenter
-
-    //             ColoredIcon {
-    //                 source: Qt.resolvedUrl("../../../assets/icons/media/rewind.svg")
-    //                 color: Theme.colorPrimary
-    //             }
-                
-    //             MouseArea { 
-    //                 anchors.fill: parent
-    //                 cursorShape: Qt.PointingHandCursor
-    //                 onClicked: MediaService.previous() 
-    //             }
-
-    //         } // item
-
-    //         Item {
-    //             width: 
-    //             Theme.iconSize
-    //             height: Theme.iconSize
-    //             visible: MediaService.canToggle
-    //             anchors.verticalCenter: parent.verticalCenter
-                
-    //             ColoredIcon {
-    //                 source: Qt.resolvedUrl("../../../assets/icons/media/"
-    //                     + (MediaService.isPlaying ? "pause.svg" : "play.svg"))
-    //                 color: Theme.colorPrimary
-    //             }
-                
-    //             MouseArea { 
-    //                 anchors.fill: parent
-    //                 cursorShape: Qt.PointingHandCursor
-    //                 onClicked: MediaService.togglePlay() 
-    //             }
-    //         } // item
-
-    //         Item {
-    //             width: Theme.iconSize
-    //             height: Theme.iconSize
-    //             visible: MediaService.canNext
-    //             anchors.verticalCenter: parent.verticalCenter
-                
-    //             ColoredIcon {
-    //                 source: Qt.resolvedUrl("../../../assets/icons/media/fast-forward.svg")
-    //                 color: Theme.colorPrimary
-    //             }
-
-    //             MouseArea { 
-    //                 anchors.fill: parent
-    //                 cursorShape: Qt.PointingHandCursor
-    //                 onClicked: MediaService.next() 
-    //             }
-    //         } // item
-    //     // media controls
-    //     } // row
-
-        
-    //     Item { // osd
-    //         width:  Theme.iconSize
-    //         height: Theme.iconSize
-    //         anchors.right:          parent.right
-    //         anchors.verticalCenter: parent.verticalCenter
-
-    //         ColoredIcon {
-    //             source: Qt.resolvedUrl("../../../assets/icons/media/info.svg")
-    //             color: Osd.mediaOsdEnabled ? Theme.colorPrimary : Theme.colorSecondary
-    //             Behavior on color { ColorAnimation { duration: 100 } }
-    //         }
-
-    //         MouseArea { 
-    //             anchors.fill: parent
-    //             cursorShape: Qt.PointingHandCursor
-    //             onClicked: Osd.mediaOsdEnabled = !Osd.mediaOsdEnabled 
-    //         }
-    //     } // item
-
-    // } // item
