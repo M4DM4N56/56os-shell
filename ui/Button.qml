@@ -35,6 +35,7 @@ Item {
     // active indicator dot
     property bool showDot:      false
     property bool isActive:     false
+    property bool highlighted:  false
 
     // expands to parent width or wraps content
     implicitWidth: fillWidth ? parent.width ?? 0 : innerRow.implicitWidth + (paddingH * 2)
@@ -53,7 +54,7 @@ Item {
         }
         radius:         root.hoverRadius
         color:          hoverColor
-        opacity:        area.containsMouse ? 1 : 0
+        opacity:        area.containsMouse || root.highlighted ? 1 : 0
 
         Behavior on opacity { NumberAnimation { duration: Theme.animFast } }
     }

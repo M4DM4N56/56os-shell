@@ -1,12 +1,13 @@
-singleton Theme Theme.qml
-singleton PanelLogic PanelLogic.qml
-singleton Osd Osd.qml
+singleton Theme                 Theme.qml
+singleton PanelLogic            PanelLogic.qml
+singleton Osd                   Osd.qml
 
-singleton ProgramIcons ProgramIcons.qml
+singleton ProgramIcons          ProgramIcons.qml
 
 
-singleton Time Time.qml
-singleton WorkspaceService WorkspaceService.qml
-singleton AudioService AudioService.qml
-singleton MediaService MediaService.qml
-singleton NotificationService NotificationService.qml
+singleton Time                  Time.qml
+singleton WorkspaceService      WorkspaceService.qml
+singleton AudioService          AudioService.qml
+singleton MediaService          MediaService.qml
+singleton NotificationService   NotificationService.qml
+singleton LauncherService       LauncherService.qml

@@ -50,7 +50,11 @@ Item {
 
     // close when pointer leaves both the bar and the panel
     readonly property bool inHoverZone: host.barHovered || panelHover.hovered
-    onInHoverZoneChanged: inHoverZone ? closeTimer.stop() : closeTimer.start()
+    
+    onInHoverZoneChanged: {
+        if (PanelLogic.openId === "launcher") return // ignore mouse hovering for launcher
+        inHoverZone ? closeTimer.stop() : closeTimer.start()
+    }
 
     Timer {
         id: closeTimer
@@ -78,9 +82,7 @@ Item {
 
         // panel animation morphs
         Behavior on x       { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
-        Behavior on y       { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
         Behavior on width   { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
-        Behavior on height  { enabled: reveal.progress > 0.99; NumberAnimation { duration: Theme.animMedium; easing.type: Easing.OutCubic } }
 
         HoverHandler { id: panelHover }
 

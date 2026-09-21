@@ -7,7 +7,9 @@ import Quickshell
 Singleton {
     id: root
     property bool barVisible: true
-    
+
+    signal launcherOpen()
+
     // currently-open panel, id defaults to null
     property string     openId:         ""      // human-readable label
     property var        owner:          null    // the object instance that opened it

@@ -9,6 +9,7 @@ import "../bar/modules/volume"
 import "../bar/modules/media"
 import "../bar/modules/workspace"
 import "../bar/modules/notifications"
+import "../bar/modules/launcher"
 
 Item {
     id: root
@@ -52,13 +53,21 @@ Item {
 
             ClockWidget         { screen: root.screen }
             WorkspaceWidget     { screen: root.screen }
-            NotificationWidget  {screen: root.screen}
+            NotificationWidget  { screen: root.screen }
         }
 
-        RowLayout { // center
-            anchors.centerIn:       parent
-            anchors.verticalCenter: parent.verticalCenter
-            MediaWidget     { screen: root.screen }
+        // center — both pinned to barRect center so width animations expand
+        // symmetrically without shifting the centerpoint (avoids RowLayout jitter)
+        MediaWidget {
+            anchors.centerIn: parent
+            screen:           root.screen
+            opacity:          PanelLogic.openId === "launcher" ? 0.0 : 1.0
+            Behavior on opacity { NumberAnimation { duration: Theme.animFast } }
+        }
+
+        LauncherWidget {
+            anchors.centerIn: parent
+            screen:           root.screen
         }
 
         RowLayout { // right side

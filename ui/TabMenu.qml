@@ -28,7 +28,7 @@ Item {
         anchors  { left: parent.left; right: parent.right; top: parent.top }
         spacing: 6
 
-        // tab bar — each tab gets an equal share of the full width
+        // each tab gets an equal share of the full width
         RowLayout {
             Layout.fillWidth: true
             spacing: 0
@@ -74,7 +74,7 @@ Item {
 
         } // rowlayout
 
-        // page area — height tracks the active page's implicit height
+        // height tracks the active pages implicit height
         Item {
             id:               pageContainer
             Layout.fillWidth: true

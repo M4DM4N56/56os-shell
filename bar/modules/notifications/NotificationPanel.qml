@@ -81,7 +81,7 @@ ColumnLayout {
                 clip:                   true
                 contentWidth:           availableWidth
 
-                Column {
+                Column { // read notifications
                     id:      readList
                     width:   readScroll.availableWidth
                     spacing: 4

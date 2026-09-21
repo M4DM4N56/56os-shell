@@ -54,6 +54,7 @@ Singleton {
     readonly property int volumePanelWidth:     240
     readonly property int notifPanelWidth:      250
     readonly property int notifToastWidth:      320
+    readonly property int launcherPanelWidth:   360
 
     readonly property int panelPaddingH:    16
     readonly property int panelPaddingV:    16
@@ -70,15 +71,15 @@ Singleton {
     readonly property int osdMediaHeight:   50
 
     // notifications
-    readonly property int   notifRadius:          10
-    readonly property int   notifToastPaddingH:   16
-    readonly property int   notifToastPaddingV:   16
-    readonly property int   notifCompactPaddingV: 8
-    readonly property int   notifCompactPaddingH: 10
-    readonly property int   notifCompactPaddingR: 4
-    readonly property int   notifIconSpacing:     8
-    readonly property color notifBodyColor:       Qt.alpha(colorPrimary, 0.6)
-    readonly property color notifHoverColor:      Qt.alpha(colorSecondary, 0.25)
+    readonly property int   notifRadius:            10
+    readonly property int   notifToastPaddingH:     16
+    readonly property int   notifToastPaddingV:     16
+    readonly property int   notifCompactPaddingV:   8
+    readonly property int   notifCompactPaddingH:   10
+    readonly property int   notifCompactPaddingR:   4
+    readonly property int   notifIconSpacing:       8
+    readonly property color notifBodyColor:         Qt.alpha(colorPrimary, 0.6)
+    readonly property color notifHoverColor:        Qt.alpha(colorSecondary, 0.25)
 
 // --- geometry
 

@@ -18,6 +18,7 @@ Scope {
         }
         function show(): void { PanelLogic.barVisible = true  }
         function hide(): void { PanelLogic.barVisible = false }
+        function launcher(): void { PanelLogic.launcherOpen() }
     }
 
     Variants {
@@ -36,10 +37,10 @@ Scope {
                 implicitHeight: screen.height
 
                 WlrLayershell.layer:         WlrLayer.Top
-                WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
+                WlrLayershell.keyboardFocus: launcherOpenHere ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None // toggle based on launcher open state
 
                 readonly property var hyprMonitor: Utils.findMonitor( Hyprland.monitors?.values ?? [], screen.name )
-
+                readonly property bool launcherOpenHere: PanelLogic.openId === "launcher" && PanelLogic.hostScreen?.name === modelData.name
                 readonly property bool shouldShowBar: PanelLogic.barVisible && !(hyprMonitor?.activeWorkspace?.hasFullscreen ?? false)
 
                 exclusiveZone: shouldShowBar ? Theme.barHeight : 0
